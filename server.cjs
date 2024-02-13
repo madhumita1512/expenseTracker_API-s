@@ -1,8 +1,10 @@
 const express = require('express')//1
+const cors = require('cors')
 const {connectToDb,getDb} = require('./dbConnection.cjs')//Importing required func from dbConnection.cjs
 const app = express('path')//2
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
+app.use(cors())
 const {ObjectId} =require('mongodb')
 
 connectToDb(function(error){
@@ -10,9 +12,9 @@ connectToDb(function(error){
         console.log("can't establish")
     }else{
         const port = process.env.PORT || 8000
-        app.listen(8000)
+        app.listen(port)
         db = getDb() // Returning from getDb()
-        console.log("listening")
+        console.log(`listening ${port}..`)
     }
 })
 // app.listen(8000)
